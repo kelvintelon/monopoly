@@ -5,28 +5,67 @@ public class Monopoly {
     static List<Player> players = new ArrayList<>();
     static Dice dice = new Dice();
 
-    public static void main(String[] args) {
-	// take in player names, then start game, roll to position, and end game when player takes 50 turns
+    private static final String BUY_PROPERTY = "Buy property";
+    private static final String SELL_PROPERTY = "Sell property";
+    private static final String EXIT_GAME = "Exit";
+    private static final String[] PLAYER_OPTIONS = { BUY_PROPERTY, SELL_PROPERTY, EXIT_GAME};
+
+    private static Options options;
+
+    public Monopoly(Options options) {
+        this.options = options;
+    }
+
+    public Monopoly() {
+
+    }
+
+    public void run() {
+        // take in player names, then start game, roll to position, and end game when player takes 50 turns
         System.out.println("Monopoly: Fast-Dealing Property Trading Game");
         CreatePlayers();
         playerInformation();
         System.out.println("It's time to play!");
         Turn(players);
+    }
 
+    public static void main(String[] args) {
+        Options options = new Options(System.in, System.out);
+        Monopoly game = new Monopoly(options);
+
+        game.run();
 
     }
 
 
 
-    public static void Turn(List<Player> players) {
-        for (Player player : players) {
-            System.out.println(player.getName() + "'s turn!");
+    public void Turn(List<Player> players) {
+        int rollValue = 0;
+        while (true) {
+            for (Player player : players) {
+                System.out.println(player.getName() + "'s turn!");
+                rollValue = dice.rollDice();
+                System.out.println("You rolled a " + rollValue + " and landed on..");
 
+            String choice = (String) options.getChoiceFromOptions(PLAYER_OPTIONS);
+
+            if (choice.equals(BUY_PROPERTY)) {
+                // display vending machine items
+                System.out.println("Let's buy something!");;
+            } else if (choice.equals(SELL_PROPERTY)) {
+                // do purchase
+                System.out.println("Let's sell something!");
+            } else if (choice.equals(EXIT_GAME)) {
+                // exit
+                System.out.println("Thank you let's play again");
+
+            }
+        }
 
         }
     }
 
-    public static void CreatePlayers() {
+    public void CreatePlayers() {
         // Ask how many players
         System.out.println("How many players? ");
         try {
@@ -39,7 +78,7 @@ public class Monopoly {
         }
     }
 
-    public static List<Player> createListOfPlayers(int numberOfPlayers) {
+    public List<Player> createListOfPlayers(int numberOfPlayers) {
 
         if (numberOfPlayers < 2 || numberOfPlayers > 5) {
             System.out.println("Between 2 and 5 players please.");
@@ -89,7 +128,7 @@ public class Monopoly {
         }
         // depending on who got the bigger roll, this would make them replace the first player
         for (int i = 0; i < first; i++)
-            players.add(players.remove(i));
+            this.players.add(players.remove(i));
 
         return players;
     }
