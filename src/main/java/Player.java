@@ -5,6 +5,8 @@ public class Player {
     private String name;
     private int cash;
     private int position;
+    private boolean playerTurn = false;
+
 
     private String properties;
 
@@ -32,5 +34,13 @@ public class Player {
 
     public int getPosition() {
         return position;
+    }
+
+    public void setPlayerTurn(boolean playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+
+    public boolean playerTurn() {
+        return playerTurn;
     }
 }
