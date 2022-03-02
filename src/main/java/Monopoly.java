@@ -35,6 +35,10 @@ public class Monopoly {
 
         game.run();
 
+        if (players.size() == 1) {
+            System.out.println("The Winner is: " + players.get(0).getName());
+        }
+
     }
 
 
