@@ -6,6 +6,7 @@ public class Player {
     private int cash;
     private int position;
     private boolean playerTurn = false;
+    private boolean broke = false;
 
 
     private String properties;
@@ -32,8 +33,16 @@ public class Player {
         return cash;
     }
 
+    public void setCash(int cash) {
+        this.cash = cash;
+    }
+
     public int getPosition() {
         return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public void setPlayerTurn(boolean playerTurn) {
@@ -42,5 +51,13 @@ public class Player {
 
     public boolean playerTurn() {
         return playerTurn;
+    }
+
+    public boolean isBroke() {
+        return broke;
+    }
+
+    public void setBroke(boolean broke) {
+        this.broke = broke;
     }
 }

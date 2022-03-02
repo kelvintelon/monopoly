@@ -8,7 +8,8 @@ public class Monopoly {
     private static final String BUY_PROPERTY = "Buy property";
     private static final String SELL_PROPERTY = "Sell property";
     private static final String EXIT_GAME = "Exit";
-    private static final String[] PLAYER_OPTIONS = { BUY_PROPERTY, SELL_PROPERTY, EXIT_GAME};
+    private static final String CONTINUE = "Continue";
+    private static final String[] PLAYER_OPTIONS = { BUY_PROPERTY, SELL_PROPERTY, CONTINUE, EXIT_GAME};
 
     private static Options options;
 
@@ -41,7 +42,7 @@ public class Monopoly {
 
     }
 
-
+    public Square newSquare = new Square();
 
     public void Turn(List<Player> players) {
         int rollValue = 0;
@@ -49,7 +50,10 @@ public class Monopoly {
             for (Player player : players) {
                 System.out.println(player.getName() + "'s turn!");
                 rollValue = dice.rollDice();
-                System.out.println("You rolled a " + rollValue + " and landed on..");
+                newSquare = newSquare.boardSquare(rollValue);
+                player.setCash(player.getCash() - newSquare.getCost());
+                playerInformation();
+                System.out.println("You rolled a " + rollValue + " and landed on.. " + newSquare.getName());
 
             String choice = (String) options.getChoiceFromOptions(PLAYER_OPTIONS);
 
@@ -59,6 +63,8 @@ public class Monopoly {
             } else if (choice.equals(SELL_PROPERTY)) {
                 // do purchase
                 System.out.println("Let's sell something!");
+            } else if (choice.equals(CONTINUE)) {
+                continue;
             } else if (choice.equals(EXIT_GAME)) {
                 // exit
                 System.out.println("Thank you let's play again");
