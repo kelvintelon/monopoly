@@ -50,11 +50,21 @@ public class Monopoly {
             for (Player player : players) {
                 System.out.println(player.getName() + "'s turn!");
                 rollValue = dice.rollDice();
-                newSquare = newSquare.boardSquare(rollValue);
+                if (player.getPosition() + rollValue > 40) {
+                    int starting = player.getPosition();
+                    player.setPosition(rollValue - (41 - starting));
+                    int newStarting = player.getPosition();
+                    newSquare = newSquare.boardSquare(newStarting);
+                } else {
+                    newSquare = newSquare.boardSquare(player.getPosition() + rollValue);
+                }
                 player.setCash(player.getCash() - newSquare.getCost());
+                player.setPosition(player.getPosition() + newSquare.position);
                 playerInformation();
                 System.out.println("You rolled a " + rollValue + " and landed on.. " + newSquare.getName());
-
+                if (player.getCash() < 0) {
+                    players.remove(player);
+                }
             String choice = (String) options.getChoiceFromOptions(PLAYER_OPTIONS);
 
             if (choice.equals(BUY_PROPERTY)) {
