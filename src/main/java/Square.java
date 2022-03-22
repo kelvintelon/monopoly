@@ -109,8 +109,6 @@ public class Square {
                 return luxury(pos);
             case 39:
                 return boardwalk(pos);
-            case 40:
-                return jail(pos);
             default:
                 return null;
         }
@@ -157,6 +155,7 @@ public class Square {
     }
 
     private Square toJail(int pos) {
+        pos = 10;
         return new Square("Go to Jail", pos, cost);
     }
 
@@ -181,9 +180,9 @@ public class Square {
         return new Square("Just Visiting", pos, cost);
     }
 
-    private Square jail(int pos) {
-        return new Square("In Jail", pos);
-    }
+//    private Square jail(int pos) {
+//        return new Square("In Jail", pos);
+//    }
 
     private Square chance(int pos) {
         return new Square("Chance", pos);

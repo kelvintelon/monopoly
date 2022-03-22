@@ -50,16 +50,17 @@ public class Monopoly {
             for (Player player : players) {
                 System.out.println(player.getName() + "'s turn!");
                 rollValue = dice.rollDice();
-                if (player.getPosition() + rollValue > 40) {
+                if (player.getPosition() + rollValue > 39) {
                     int starting = player.getPosition();
-                    player.setPosition(rollValue - (41 - starting));
-                    int newStarting = player.getPosition();
-                    newSquare = newSquare.boardSquare(newStarting);
+                    int newStarting = (rollValue - (39 - starting));
+                    // uses boardsquare to find place on board
+                    newSquare = newSquare.boardSquare(-1 + newStarting);
+                    player.setPosition(newSquare.position);
                 } else {
                     newSquare = newSquare.boardSquare(player.getPosition() + rollValue);
                 }
                 player.setCash(player.getCash() - newSquare.getCost());
-                player.setPosition(player.getPosition() + newSquare.position);
+                player.setPosition(newSquare.position);
                 playerInformation();
                 System.out.println("You rolled a " + rollValue + " and landed on.. " + newSquare.getName());
                 if (player.getCash() < 0) {
@@ -68,16 +69,18 @@ public class Monopoly {
             String choice = (String) options.getChoiceFromOptions(PLAYER_OPTIONS);
 
             if (choice.equals(BUY_PROPERTY)) {
-                // display vending machine items
+
                 System.out.println("Let's buy something!");;
             } else if (choice.equals(SELL_PROPERTY)) {
                 // do purchase
                 System.out.println("Let's sell something!");
+                break;
             } else if (choice.equals(CONTINUE)) {
                 continue;
             } else if (choice.equals(EXIT_GAME)) {
                 // exit
                 System.out.println("Thank you let's play again");
+                System.exit(1);
 
             }
         }
